@@ -110,8 +110,8 @@ function renderHtml(data) {
 
     let element = document.getElementById("character");
 
-    // Limpiar contenido anterior
-    element.innerHTML = "";
+    // Variable para guardar HTML
+    let template = "";
 
     let resultCount = data.results.length;
 
@@ -119,7 +119,7 @@ function renderHtml(data) {
 
         let character = data.results[index];
 
-        element.innerHTML += `
+        template += `
             <li>
                 <img src="${character.image}" alt="${character.name}">
                 <h2>${character.name}</h2>
@@ -127,6 +127,9 @@ function renderHtml(data) {
             </li>
         `;
     }
+
+    // Reemplazar contenido completo
+    element.innerHTML = template;
 }
 
 // Primera carga
