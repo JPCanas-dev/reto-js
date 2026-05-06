@@ -1,12 +1,24 @@
 // URL inicial
 const url_api = "https://rickandmortyapi.com/api/character";
 
+// Control de requests simultáneos
+let isLoading = false;
+
 /**
  * requestData
  * Hace petición al API
  * @param {string} url
  */
 async function requestData(url) {
+
+    // Si ya hay una petición en proceso
+    // no hacer otra
+    if (isLoading) {
+        return;
+    }
+
+    // Bloquear nuevas requests
+    isLoading = true;
 
     const response = await axios.get(url);
 
@@ -21,6 +33,9 @@ async function requestData(url) {
 
     // Renderizar personajes
     renderHtml(data);
+
+    // Liberar bloqueo
+    isLoading = false;
 }
 
 /**
