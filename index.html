@@ -1,16 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Rick and Morty</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
     <main>
+
         <ul id="character"></ul>
-        <button id="loadMore" data-next="" data-prev="" onclick="loadMore()">Cargar más</button>
+
+        <!-- Número de página -->
+        <p id="pageNumber">Página 1</p>
+
+        <!-- Botón anterior -->
+        <button id="prevBtn" data-prev="" onclick="prevPage()">
+            Anterior
+        </button>
+
+        <!-- Botón siguiente -->
+        <button id="nextBtn" data-next="" onclick="nextPage()">
+            Siguiente
+        </button>
+
     </main>
+
+    <!-- Axios CDN -->
     <script src="https://cdn.jsdelivr.net/npm/axios@1.16.0/dist/axios.min.js"></script>
+
     <script src="api.js"></script>
+
 </body>
+
 </html>
