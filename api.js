@@ -4,6 +4,9 @@ const url_api = "https://rickandmortyapi.com/api/character";
 // Control de requests simultáneos
 let isLoading = false;
 
+// Guardar personajes originales
+let originalCharacters = [];
+
 /**
  * requestData
  * Hace petición al API
@@ -11,28 +14,33 @@ let isLoading = false;
  */
 async function requestData(url) {
 
-    // Si ya hay una petición en proceso
-    // no hacer otra
+    // Evitar múltiples requests
     if (isLoading) {
         return;
     }
 
-    // Bloquear nuevas requests
+    // Bloquear requests
     isLoading = true;
 
     const response = await axios.get(url);
 
-    // Axios guarda los datos en response.data
+    // Axios guarda la data en response.data
     let data = response.data;
+
+    // Guardar personajes originales
+    originalCharacters = data.results;
+
+    // Reiniciar filtro
+    document.getElementById("genderFilter").value = "all";
 
     // Actualizar número de página
     updatePageNumber(url);
 
-    // Guardar URLs en botones
+    // Actualizar botones
     updateButtons(data.info);
 
     // Renderizar personajes
-    renderHtml(data);
+    renderHtml(originalCharacters);
 
     // Liberar bloqueo
     isLoading = false;
@@ -81,7 +89,7 @@ function updateButtons(info) {
         (info.prev == null) ? "" : info.prev
     );
 
-    // Deshabilitar si no hay páginas
+    // Deshabilitar botones
     nextBtn.disabled = (info.next == null);
     prevBtn.disabled = (info.prev == null);
 }
@@ -117,22 +125,49 @@ function prevPage() {
 }
 
 /**
+ * filterCharacters
+ * Filtra personajes por género
+ */
+function filterCharacters() {
+
+    const filterValue =
+        document.getElementById("genderFilter").value;
+
+    // Mostrar todos
+    if (filterValue == "all") {
+
+        renderHtml(originalCharacters);
+
+        return;
+    }
+
+    // Filtrar personajes
+    let filteredCharacters =
+        originalCharacters.filter(function(character) {
+
+            return character.gender == filterValue;
+        });
+
+    renderHtml(filteredCharacters);
+}
+
+/**
  * renderHtml
  * Renderiza personajes
- * @param {object} data
+ * @param {array} characters
  */
-function renderHtml(data) {
+function renderHtml(characters) {
 
     let element = document.getElementById("character");
 
     // Variable para guardar HTML
     let template = "";
 
-    let resultCount = data.results.length;
+    let resultCount = characters.length;
 
     for (let index = 0; index < resultCount; index++) {
 
-        let character = data.results[index];
+        let character = characters[index];
 
         template += `
             <li>

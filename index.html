@@ -12,6 +12,15 @@
 
     <main>
 
+        <!-- Filtro dinámico -->
+        <select id="genderFilter" onchange="filterCharacters()">
+            <option value="all">Todos</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="unknown">Unknown</option>
+        </select>
+
+        <!-- Lista de personajes -->
         <ul id="character"></ul>
 
         <!-- Número de página -->
