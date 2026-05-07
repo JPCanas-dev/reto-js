@@ -30,11 +30,14 @@ async function requestData(url) {
     // Guardar personajes originales
     originalCharacters = data.results;
 
+    console.log(data);
+    console.log(originalCharacters);
+
     // Reiniciar filtro
     document.getElementById("genderFilter").value = "all";
 
     // Actualizar número de página
-    updatePageNumber(url);
+    updatePageNumber(url, data.info.pages);
 
     // Actualizar botones
     updateButtons(data.info);
@@ -51,7 +54,7 @@ async function requestData(url) {
  * Actualiza número de página
  * @param {string} url
  */
-function updatePageNumber(url) {
+function updatePageNumber(url, lastPage) {
 
     let page = 1;
 
@@ -59,12 +62,11 @@ function updatePageNumber(url) {
     if (url.includes("page=")) {
 
         let params = new URLSearchParams(url.split("?")[1]);
-
         page = params.get("page");
     }
 
     document.getElementById("pageNumber").innerText =
-        `Página ${page}`;
+        `Página ${page} de ${lastPage}`;
 }
 
 /**
