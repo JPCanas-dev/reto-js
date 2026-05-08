@@ -30,9 +30,6 @@ async function requestData(url) {
     // Guardar personajes originales
     originalCharacters = data.results;
 
-    console.log(data);
-    console.log(originalCharacters);
-
     // Reiniciar filtro
     document.getElementById("genderFilter").value = "all";
 
