@@ -10,31 +10,54 @@
 
 <body>
 
+    <header>
+
+        <div class="logos">
+
+            <!-- <img src="logo-1.png" alt="Rick and Morty Icon" id="logoIcon"> -->
+
+            <img src="logo-2.png" alt="Rick and Morty Logo" id="logoTitle">
+
+        </div>
+
+        <h1>
+            Explore your favorite<br>characters
+        </h1>
+
+    </header>
+
     <main>
 
         <!-- Filtro dinámico -->
-        <select id="genderFilter" onchange="filterCharacters()">
-            <option value="all">Todos</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="unknown">Unknown</option>
-        </select>
+        <div class="topControls">
+
+            <select id="genderFilter" onchange="filterCharacters()">
+                <option value="all">All</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="unknown">Unknown</option>
+            </select>
+
+        </div>
 
         <!-- Lista de personajes -->
         <ul id="character"></ul>
 
-        <!-- Número de página -->
+        <!-- Paginación -->
         <p id="pageNumber"></p>
 
-        <!-- Botón anterior -->
-        <button id="prevBtn" data-prev="" onclick="prevPage()">
-            Anterior
-        </button>
+        <!-- Botones -->
+        <div class="buttons">
 
-        <!-- Botón siguiente -->
-        <button id="nextBtn" data-next="" onclick="nextPage()">
-            Siguiente
-        </button>
+            <button id="prevBtn" data-prev="" onclick="prevPage()">
+                Anterior
+            </button>
+
+            <button id="nextBtn" data-next="" onclick="nextPage()">
+                Siguiente
+            </button>
+
+        </div>
 
     </main>
 
