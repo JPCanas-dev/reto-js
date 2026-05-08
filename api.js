@@ -1,61 +1,61 @@
-// URL inicial
+// Initial URL
 const url_api = "https://rickandmortyapi.com/api/character";
 
-// Control de requests simultáneos
+// Control simultaneous requests
 let isLoading = false;
 
-// Guardar personajes originales
+// Store original characters
 let originalCharacters = [];
 
 /**
  * requestData
- * Hace petición al API
+ * Makes API request
  * @param {string} url
  */
 async function requestData(url) {
 
-    // Evitar múltiples requests
+    // Prevent multiple requests
     if (isLoading) {
         return;
     }
 
-    // Bloquear requests
+    // Lock requests
     isLoading = true;
 
     const response = await axios.get(url);
 
-    // Axios guarda la data en response.data
+    // Axios stores data in response.data
     let data = response.data;
 
-    // Guardar personajes originales
+    // Store original characters
     originalCharacters = data.results;
 
-    // Reiniciar filtro
+    // Reset filter
     document.getElementById("genderFilter").value = "all";
 
-    // Actualizar número de página
+    // Update page number
     updatePageNumber(url, data.info.pages);
 
-    // Actualizar botones
+    // Update buttons
     updateButtons(data.info);
 
-    // Renderizar personajes
+    // Render characters
     renderHtml(originalCharacters);
 
-    // Liberar bloqueo
+    // Release lock
     isLoading = false;
 }
 
 /**
  * updatePageNumber
- * Actualiza número de página
+ * Updates page number
  * @param {string} url
  */
 function updatePageNumber(url, lastPage) {
 
     let page = 1;
 
-    // Buscar parámetro ?page=
+    // Search ?page= parameter
     if (url.includes("page=")) {
 
         let params = new URLSearchParams(url.split("?")[1]);
@@ -63,12 +63,12 @@ function updatePageNumber(url, lastPage) {
     }
 
     document.getElementById("pageNumber").innerText =
-        `Página ${page} de ${lastPage}`;
+        `Page ${page} of ${lastPage}`;
 }
 
 /**
  * updateButtons
- * Actualiza data-next y data-prev
+ * Updates data-next and data-prev
  * @param {object} info
  */
 function updateButtons(info) {
@@ -76,26 +76,26 @@ function updateButtons(info) {
     const nextBtn = document.getElementById("nextBtn");
     const prevBtn = document.getElementById("prevBtn");
 
-    // Guardar siguiente página
+    // Store next page
     nextBtn.setAttribute(
         "data-next",
         (info.next == null) ? "" : info.next
     );
 
-    // Guardar página anterior
+    // Store previous page
     prevBtn.setAttribute(
         "data-prev",
         (info.prev == null) ? "" : info.prev
     );
 
-    // Deshabilitar botones
+    // Disable buttons
     nextBtn.disabled = (info.next == null);
     prevBtn.disabled = (info.prev == null);
 }
 
 /**
  * nextPage
- * Ir a siguiente página
+ * Go to next page
  */
 function nextPage() {
 
@@ -110,7 +110,7 @@ function nextPage() {
 
 /**
  * prevPage
- * Ir a página anterior
+ * Go to previous page
  */
 function prevPage() {
 
@@ -125,14 +125,14 @@ function prevPage() {
 
 /**
  * filterCharacters
- * Filtra personajes por género
+ * Filters characters by gender
  */
 function filterCharacters() {
 
     const filterValue =
         document.getElementById("genderFilter").value;
 
-    // Mostrar todos
+    // Show all characters
     if (filterValue == "all") {
 
         renderHtml(originalCharacters);
@@ -140,7 +140,7 @@ function filterCharacters() {
         return;
     }
 
-    // Filtrar personajes
+    // Filter characters
     let filteredCharacters =
         originalCharacters.filter(function(character) {
 
@@ -152,14 +152,14 @@ function filterCharacters() {
 
 /**
  * renderHtml
- * Renderiza personajes
+ * Renders characters
  * @param {array} characters
  */
 function renderHtml(characters) {
 
     let element = document.getElementById("character");
 
-    // Variable para guardar HTML
+    // Variable to store HTML
     let template = "";
 
     let resultCount = characters.length;
@@ -177,9 +177,9 @@ function renderHtml(characters) {
         `;
     }
 
-    // Reemplazar contenido completo
+    // Replace all content
     element.innerHTML = template;
 }
 
-// Primera carga
+// Initial load
 requestData(url_api);
